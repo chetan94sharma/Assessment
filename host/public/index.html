@@ -1,0 +1,161 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Application Support — Skills Assessment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,900&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0e1116; --panel:#161b22; --panel-2:#1c232c; --line:#2a323d;
+  --txt:#e7ecf1; --mut:#8a97a6; --faint:#5b6776;
+  --accent:#e9b949; --ni:#ef5a5a; --beg:#e9b949; --sat:#4ea8de; --exp:#54c08a; --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--txt);font-family:"IBM Plex Sans",sans-serif}
+body{background-image:
+    radial-gradient(1200px 600px at 80% -10%, rgba(233,185,73,.06), transparent 60%),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size:auto,46px 46px,46px 46px; background-position:0 0,-1px -1px,-1px -1px; min-height:100vh;}
+.wrap{max-width:920px;margin:0 auto;padding:34px 22px 90px}
+.mono{font-family:"JetBrains Mono",monospace}
+h1,h2,h3{font-family:"Fraunces",serif;font-weight:600;letter-spacing:-.5px;margin:0}
+a{color:var(--accent)}
+.kicker{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent)}
+.mut{color:var(--mut)} .faint{color:var(--faint)}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius)}
+.pad{padding:24px}
+.brand{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.brand h1{font-size:34px;font-weight:900}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--exp);box-shadow:0 0 0 4px rgba(84,192,138,.15);display:inline-block}
+label.fld{display:block;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin:0 0 7px}
+input,select,button{font-family:inherit;font-size:15px}
+input[type=text],select{width:100%;background:var(--ink);border:1px solid var(--line);color:var(--txt);padding:13px 14px;border-radius:10px;outline:none}
+input[type=text]:focus,select:focus{border-color:var(--accent)}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:620px){.row{grid-template-columns:1fr}}
+.btn{cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--txt);padding:13px 20px;border-radius:11px;font-weight:600;transition:.15s;letter-spacing:.3px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:#1a1405;border-color:var(--accent)}
+.btn.primary:hover{filter:brightness(1.07)}
+.btn.ghost{background:transparent}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btnrow{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.steps{display:flex;gap:6px;margin:18px 0 4px}
+.step{flex:1;height:6px;border-radius:4px;background:var(--line)}
+.step.done{background:var(--accent)}
+.step.cur{background:var(--exp)}
+.qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;gap:10px;flex-wrap:wrap}
+.tier{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid var(--line);border-radius:20px;padding:3px 10px;color:var(--mut)}
+.q{font-size:18px;line-height:1.5;margin:6px 0 16px}
+.q code{background:var(--ink);border:1px solid var(--line);border-radius:6px;padding:1px 6px;font-family:"JetBrains Mono",monospace;font-size:13px}
+.opt{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);background:var(--ink);border-radius:11px;padding:13px 15px;margin:9px 0;cursor:pointer;transition:.12s;line-height:1.45}
+.opt:hover{border-color:var(--mut)}
+.opt.sel{border-color:var(--accent);background:rgba(233,185,73,.07)}
+.opt .mk{width:22px;height:22px;border:1px solid var(--faint);border-radius:50%;flex:0 0 auto;display:grid;place-items:center;font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--mut);margin-top:1px}
+.opt.sel .mk{border-color:var(--accent);background:var(--accent);color:#1a1405}
+.bigscore{font-family:"Fraunces",serif;font-weight:900;font-size:64px;line-height:1}
+.badge{display:inline-block;font-family:"JetBrains Mono",monospace;font-size:12px;font-weight:700;letter-spacing:1px;padding:5px 12px;border-radius:20px;text-transform:uppercase}
+.b-ni{background:rgba(239,90,90,.15);color:var(--ni);border:1px solid var(--ni)}
+.b-beg{background:rgba(233,185,73,.15);color:var(--beg);border:1px solid var(--beg)}
+.b-sat{background:rgba(78,168,222,.15);color:var(--sat);border:1px solid var(--sat)}
+.b-exp{background:rgba(84,192,138,.15);color:var(--exp);border:1px solid var(--exp)}
+.skill{border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0;background:var(--panel-2)}
+.skill .top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.skill h3{font-size:19px}
+.bar{height:9px;background:var(--ink);border-radius:6px;overflow:hidden;margin:12px 0 8px;border:1px solid var(--line)}
+.bar > i{display:block;height:100%;border-radius:6px}
+.gap{font-family:"JetBrains Mono",monospace;font-size:12px;display:flex;align-items:center;gap:7px}
+.gap b{font-weight:700}
+.arrow.up{color:var(--exp)} .arrow.flat{color:var(--mut)} .arrow.down{color:var(--ni)}
+.verdict{border-left:3px solid var(--accent);padding:14px 18px;background:var(--panel-2);border-radius:0 12px 12px 0}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:10px 9px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--mut);cursor:pointer;user-select:none}
+.cell{display:inline-block;width:13px;height:13px;border-radius:4px;vertical-align:middle}
+.grp{font-family:"Fraunces",serif;font-size:20px;margin:26px 0 4px;display:flex;align-items:center;gap:10px}
+.star{color:var(--accent)}
+.scroll{overflow-x:auto}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mut);margin-top:14px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.note{font-size:12.5px;color:var(--faint);line-height:1.55}
+.hidden{display:none}
+.timer{position:fixed;top:14px;right:16px;z-index:50;font-family:"JetBrains Mono",monospace;font-size:15px;font-weight:700;letter-spacing:.5px;color:var(--txt);background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 13px;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.timer.warn{color:var(--ni);border-color:var(--ni);animation:tpulse 1s infinite}
+@keyframes tpulse{50%{background:rgba(239,90,90,.14)}}
+.empty{text-align:center;color:var(--faint);padding:40px}
+</style>
+
+<div class="wrap">
+<div id="timer" class="timer hidden">25:00</div>
+
+<!-- HOME -->
+<section id="home">
+  <div class="brand"><span class="dot"></span><span class="kicker">Application Support · Fintech</span></div>
+  <h1>Technical Skills Assessment</h1>
+  <p class="mut" style="max-width:660px;line-height:1.6;margin:12px 0 24px">
+    An <b>adaptive</b> multiple-choice evaluation across six support competencies. The difficulty of each
+    question adjusts to your answers, and results are mapped to
+    <b>Need&nbsp;Improvement → Beginner → Satisfactory → Expert</b>, then measured against the bar for your designation.
+  </p>
+  <div class="card pad">
+    <div class="row">
+      <div><label class="fld">Full name</label><input id="name" type="text" placeholder="e.g. A. Sharma" autocomplete="off"></div>
+      <div><label class="fld">Designation</label>
+        <select id="desig"><option value="">Select…</option>
+          <option>Associate Engineer</option><option>Engineer</option><option>Senior Engineer</option>
+          <option>Tech Lead</option><option>Team Lead</option></select></div>
+    </div>
+    <div class="btnrow" style="margin-top:22px">
+      <button class="btn primary" id="start">Begin assessment →</button>
+      <button class="btn ghost dashonly" id="toDash">View team dashboard</button>
+    </div>
+  </div>
+  <p class="note" style="margin-top:18px">
+    36 questions · 6 skills · ~25–35 min. Difficulty adapts to your performance; harder questions count more.
+    No negative marking. You can't return to a previous question. Take this supervised — the scoring key lives in the page.
+  </p>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="hidden">
+  <div class="brand"><span class="kicker" id="qskill">SQL</span></div>
+  <div class="steps" id="steps"></div>
+  <div class="qmeta"><span class="mut mono" id="qcount">Question 1 of 36</span><span class="mut mono" id="qprog">0% complete</span></div>
+  <div class="card pad" style="margin-top:10px">
+    <div class="qmeta"><span class="tier" id="qtier">Level 2 · Basic</span><span class="faint mono" id="qid">SQL · 1/6</span></div>
+    <div class="q" id="qtext"></div>
+    <div id="qopts"></div>
+  </div>
+  <div class="btnrow" style="margin-top:18px;justify-content:flex-end">
+    <button class="btn primary" id="next" disabled>Next →</button>
+  </div>
+</section>
+
+<!-- RESULT -->
+<section id="result" class="hidden">
+  <div class="brand"><span class="kicker">Assessment complete</span></div>
+  <h1 style="font-size:26px;margin:2px 0 6px">Thank you — your assessment is submitted.</h1>
+  <p class="note" id="saveMsg" style="margin:0 0 16px">Submitting…</p>
+  <div class="card pad" style="text-align:center">
+    <canvas id="cert" width="1100" height="770"
+      style="width:100%;max-width:780px;height:auto;border:1px solid var(--line);border-radius:12px;background:#faf7ef"></canvas>
+    <div class="btnrow" style="justify-content:center;margin-top:16px">
+      <button class="btn primary" id="dlCert">Download certificate</button>
+      <button class="btn ghost dashonly" id="toDash2">Team dashboard</button>
+    </div>
+  </div>
+  <!-- detailed breakdown retained for records / admin tool (hidden on the candidate screen) -->
+  <div style="display:none">
+    <h1 id="rname"></h1><p id="rdesig"></p><span id="rdesig2"></span>
+    <div id="rtotal"></div><div id="rbadge"></div><div id="rverdict"></div><div id="rskills"></div>
+  </div>
+</section>
+</div>
+<style>
+ body{-webkit-user-select:none;-moz-user-select:none;user-select:none;-webkit-touch-callout:none}
+ input,select,textarea{-webkit-user-select:text;user-select:text}
+</style>
+<script src="questions.js"></script>
+<script src="engine.js"></script>
+<script src="app-init.js"></script>
