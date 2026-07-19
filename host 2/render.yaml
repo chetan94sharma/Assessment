@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: skills-assessment
+    runtime: node
+    plan: free
+    startCommand: node server.js
+    envVars:
+      - key: ADMIN_KEY
+        sync: false        # your admin dashboard secret (set in Render dashboard)
+      - key: RESEND_API_KEY
+        sync: false        # Resend API key -> emails each result on submit
+      - key: ADMIN_EMAIL
+        sync: false        # where results are emailed (your inbox)
+      - key: MAIL_FROM
+        sync: false        # optional; defaults to onboarding@resend.dev
+# To ALSO keep results/certificates on disk across restarts, upgrade to a paid
+# plan and add a disk, then set DATA_DIR to its mount path:
+#   plan: starter
+#   disk:
+#     name: data
+#     mountPath: /var/data
+#     sizeGB: 1
+#   (add under envVars)  - key: DATA_DIR
+#                          value: /var/data
